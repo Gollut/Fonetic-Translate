@@ -1,3 +1,1 @@
-<?php
-	$l4=array("bell");
-?>
+<?php $l4=array('bell'); ?>

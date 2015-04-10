@@ -1,3 +1,1 @@
-<?php
-	$l3=array("ing");
-?>
+<?php $l3=array('ing','app','ust'); ?>

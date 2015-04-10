@@ -1,3 +1,1 @@
-<?php
-	$l2=array("pa");
-?>
+<?php $l2=array('pa','et','iz','ug'); ?>

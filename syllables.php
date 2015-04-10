@@ -65,7 +65,7 @@
 					if(strpos($word,$l2[$j])===$i)
 					{
 						$word = substr_replace($word, "|", $i+2, 0);
-						$i+=2;
+						$i=$i+2;
 						$found=true;
 						break;
 					}
@@ -80,7 +80,7 @@
 					if(strpos($word,$l1[$j])===$i)
 					{
 						$word = substr_replace($word, "|", $i+1, 0);
-						$i+=1;
+						$i++;
 						$found=true;
 						break;
 					}
