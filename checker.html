@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<head>
+	<title>Learn new syllables</title>
+</head>
+<style type="text/css" media="screen">
+	.end {
+		color:#666;
+		display: inline-block;
+		width:  70px;
+	}
+	#word_ui{
+		color:#000;
+		font-size: 200px;
+		font-family: "Geomanist";
+		text-align: center;
+	}
+</style>
+<script type="text/javascript">
+	String.prototype.replaceAt=function(index, character) {
+    	return this.substr(0, index) + character + this.substr(index+character.length);
+	}
+	'use strict';
+	function del_char(pos) {
+		corr_word=corr_word.substr(0,pos)+corr_word.substr(pos+1);
+	}
+	var corr_word=''; // after correction
+	var old_word='';  // stock
+	var last=0;       // it's for UI
+	$(document).ready(function() {
+		new_word();
+	});
+	function render(word,pos){
+		console.log(corr_word);
+		var output=word.split("|");
+		var result=output.pop();
+		while(output.length>0) {
+			var l=0;
+			for(var i=0;i<output.length;i++)
+			{
+				if(i)
+				{
+					l++;
+				}
+				l+=output[i].length;
+			}
+			result=output.pop()+"<b class='end' id='l"+l+"'>|</b>"+result;
+		}
+		$("#word_ui").html(result);
+		$("#l"+pos).css("color","#b71c1c");
+		last="l"+pos;
+		$(".end").click(function() {
+			$("#"+last).css("color","#666");
+			last=$(this).attr('id');
+			$(this).css("color","#b71c1c");
+		});
+	}
+	function new_word(){
+		$.get("new_word.php",function(word) {
+			corr_word=word;
+			old_word=word;
+			render(word);
+		});
+	}
+	function accept(){
+		if(corr_word!=old_word) {
+			$.post("update.php",{word:corr_word});
+		}
+		new_word();
+	}
+	$(document).keyup(function(event) {
+				var key=event.which;
+				if(key==37)//move left
+				{
+					swap(parseInt(last.substring(1)),parseInt(last.substring(1))-1,-1);
+				}
+				if(key==39)//move right
+				{
+					swap(parseInt(last.substring(1)),parseInt(last.substring(1))+1,1);
+				}
+	});
+	function swap(a,b,d){
+		console.log(corr_word);
+		var c=corr_word[a];
+		corr_word=corr_word.replaceAt(a,corr_word[b]);
+		corr_word=corr_word.replaceAt(b,c);
+		if(corr_word[a+d]===corr_word[b+d])
+		{
+			del_char(a+d);
+		}
+		render(corr_word,b);
+	}
+</script>
+<body>
+	<div id="word_ui"></div>
+	<button onclick="accept()">Now it's ok</button>
+</body>
+</html>
