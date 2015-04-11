@@ -4,6 +4,7 @@
 	$word=rand(0,count($words)-1);
 	$word=$words[$word];
 
-	$word="August";
+//	$word="accompany";
+	$word=preg_replace('/\s+/', '', $word);
 	echo find_syll($word);
 ?>

@@ -1,3 +1,1 @@
-<?php $l5=array('grand','ers
-','ust
-'); ?>
+<?php $l5=array('grand'); ?>

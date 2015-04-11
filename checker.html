@@ -66,7 +66,7 @@
 	function accept(){
 		if(corr_word!=old_word) {
 			$.post("update.php",{sylls:corr_word.split("|")},function(data){
-				//alert(data);
+				alert(data);
 			});
 		}
 		new_word();
